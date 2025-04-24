@@ -78,7 +78,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat 'docker build --no-cache -t 2048game:latest .'
+                    bat 'docker build --no-cache -t mani9966/2048game:latest .'
                 }
             }
         }
@@ -99,7 +99,7 @@ pipeline {
                         bat '''
                             echo "Mani@9000" | docker login -u "mani9966" --password-stdin
                             docker tag 2048game:latest mani9966/2048game:latest
-                            docker push 2048game:latest
+                            docker push mani9966/2048game:latest
                         '''
                     }
                 }
