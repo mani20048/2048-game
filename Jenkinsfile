@@ -35,7 +35,7 @@ pipeline {
             steps {
                 echo 'Trigger Render Deployment via Webhook (if supported)'
                 //or call Render's Deploy Hook if configured
-                sh 'curl -X GET https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ'
+                bat 'curl -X GET https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ'
             }
         }
     }
