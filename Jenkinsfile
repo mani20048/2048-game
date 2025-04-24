@@ -21,10 +21,14 @@ pipeline {
             }
         }
         stage('Run Docker Container') {
-            steps {
-                bat 'docker run -d -p 80:80 --name game2048 2048game'
-            }
+    steps {
+        script {
+            bat 'docker rm -f 2048game || true'     // Stop and remove old container if exists
+            bat 'docker run -d --name 2048game -p 80:80 2048game:latest'  // Run new container
         }
+    }
+}
+
 
         // stage('Push to Docker Hub') {
         //     steps {
@@ -36,13 +40,14 @@ pipeline {
          //   }
        // }
 
-        stage('Deploy to Render') {
-            steps {
-                echo 'Trigger Render Deployment via Webhook (if supported)'
-                //or call Render's Deploy Hook if configured
-                bat 'curl -X GET https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ'
-            }
+       stage('Deploy to Render') {
+    steps {
+        script {
+            sh 'curl -X POST https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ'
         }
+    }
+}
+
     }
 
     post {
