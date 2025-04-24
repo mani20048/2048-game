@@ -16,20 +16,25 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("2048game:latest")
+                    bat 'docker build -t 2048game .'
                 }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                bat 'docker run -d -p 80:80 --name game2048 2048game'
             }
         }
 
-        stage('Push to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerHub') {
-                        docker.image("2048game:latest").push()
-                    }
-                }
-            }
-        }
+        // stage('Push to Docker Hub') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('https://index.docker.io/v1/', 'dockerHub') {
+                        
+        //             }
+        //         }
+         //   }
+       // }
 
         stage('Deploy to Render') {
             steps {
