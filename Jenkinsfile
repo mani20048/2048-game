@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t 2048game:latest ."
+                    bat "docker build -t 2048game:latest ."
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh "docker run -d -p 80:80 --name 2048game_container 2048game:latest"
+                    bat "docker run -d -p 80:80 --name 2048game_container 2048game:latest"
                 }
             }
         }
@@ -33,8 +33,8 @@ pipeline {
         stage('Cleanup (optional)') {
             steps {
                 script {
-                    sh "docker stop 2048game_container || true"
-                    sh "docker rm 2048game_container || true"
+                    bat "docker stop 2048game_container || true"
+                    bat "docker rm 2048game_container || true"
                 }
             }
         }
