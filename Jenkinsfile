@@ -112,9 +112,9 @@ pipeline {
             }
             steps {
                 echo 'Triggering Render Deploy via Webhook...'
-                bat '''
-                    curl -X POST https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ
-                '''
+                
+                   bat ' curl -X POST "https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ" '
+                
             }
         }
     }
