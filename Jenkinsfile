@@ -86,8 +86,8 @@ pipeline {
         stage('Run Docker Container') {
     steps {
         script {
-            bat 'docker rm -f mani9966/2048game || true'     // Stop and remove old container if exists
-            bat 'docker run -d --name 2048game -p 80:80 mani9966/2048game:latest'  // Run new container
+            bat 'docker rm -f 2048game || true'     // Stop and remove old container if exists
+            bat 'docker run -d -p 80:80 2048game:latest'  // Run new container
         }
     }
 }
