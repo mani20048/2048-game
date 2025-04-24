@@ -82,7 +82,7 @@ pipeline {
                 }
             }
         }
-         stage('Run Docker Container') {
+ //        stage('Run Docker Container') {
 //     steps {
 //         script {
 //             bat 'docker rm -f 2048game || true'     // Stop and remove old container if exists
