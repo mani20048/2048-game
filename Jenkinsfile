@@ -66,6 +66,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'mani9966/2048game'
         BRANCH = 'master'
+        RENDER_DEPLOY_HOOK_URL = 'https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ'
     }
 
     stages {
