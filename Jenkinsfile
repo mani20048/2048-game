@@ -2,47 +2,50 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "2048game"
-        IMAGE_TAG = "latest"
+        DOCKER_HUB_CREDENTIALS = credentials('dockerHub')
+        IMAGE_NAME = 'mani9966/2048game'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                git 'https://github.com/mani20048/2048-game.git'  // replace with your actual repo
+                git 'https://github.com/mani20048/2048-game.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat "docker build -t 2048game:latest ."
+                    docker.build("2048game:latest")
                 }
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Push to Docker Hub') {
             steps {
                 script {
-                    bat "docker run -d -p 80:80 --name 2048game_container 2048game:latest"
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerHub') {
+                        docker.image("2048game:latest").push()
+                    }
                 }
             }
         }
 
-        // Optional: Add tests or cleanup
-        stage('Cleanup (optional)') {
+        stage('Deploy to Render') {
             steps {
-                script {
-                    bat "docker stop 2048game_container || true"
-                    bat "docker rm 2048game_container || true"
-                }
+                echo 'Trigger Render Deployment via Webhook (if supported)'
+                //or call Render's Deploy Hook if configured
+                sh 'curl -X GET https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ'
             }
         }
     }
 
     post {
-        always {
-            echo 'Pipeline finished.'
+        success {
+            echo 'Pipeline executed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
