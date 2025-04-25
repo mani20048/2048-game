@@ -87,7 +87,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    bat 'docker rm -f 2048game || true'  // Stop and remove old container if exists
+                   // bat 'docker rm -f mani992048game || true'  // Stop and remove old container if exists
                     bat 'docker run -d -p 80:80 mani9966/2048game:latest'  // Run new container
                 }
             }
@@ -95,11 +95,11 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'mani9966', passwordVariable: 'Mani@9000')]) {
                     script {
                         // Docker login using Jenkins credentials securely
                         bat '''
-                            echo $PASSWORD | docker login -u $USERNAME --password-stdin
+                            echo %PASSWORD% | docker login -u %USERNAME% --password-stdin
                             docker tag 2048game:latest mani9966/2048game:latest
                             docker push mani9966/2048game:latest
                         '''
@@ -117,6 +117,7 @@ pipeline {
                 bat '''
                     curl -X POST "https://api.render.com/deploy/srv-d02ipa3e5dus73brf8r0?key=xR6ey_iWrcQ" 
                 '''
+              echo "Deployment Success."
             }
         }
     }
